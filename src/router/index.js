@@ -3,7 +3,7 @@ import App from '../App';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import Login from '../views/login/Login'
 import Means from '../views/means/Means'
-import List from '../views/list/List'
+import Lists from '../views/list/Lists'
 import Register from '../views/register/Register'
 import Edit from '../views/edit/Edit'
 
@@ -11,7 +11,7 @@ const BaseRouter = () => (
   <Router>
     <Routes>
       <Route path="/" element={<App />}>
-        <Route path="/list" element={<List />}></Route>
+        <Route path="/list" element={<Lists />}></Route>
         <Route path="/edit" element={<Edit />}></Route>
         <Route path="/means" element={<Means />}></Route>
       </Route>
