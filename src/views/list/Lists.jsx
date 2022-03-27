@@ -1,16 +1,27 @@
 import React, { useState, useEffect } from 'react'
 import { articleApi } from '../../request/api'
 
-import { List ,Button} from 'antd';
+import { List ,Button,Pagination} from 'antd';
 
 import './Lists.less'
 export default function Lists() {
   const [data, setdata] = useState([])
+  const [page, setpage] = useState(3)
   useEffect(() => {
     articleApi().then((res) => {
-      setdata(res.data.arr)
+      console.log(res)
+      if(res.errCode===0){
+        let {arr,total,num,count}=res.data
+      }
+      //setdata(res.data.arr)
     })
-  }, [])
+  }, []);
+  const onChange = page => {
+    console.log(page);
+    this.setState({
+      current: page,
+    });
+  };
   return (
     <div className="lists">
       <List
@@ -26,6 +37,7 @@ export default function Lists() {
           </List.Item>
         )}
       />
+      <Pagination onChange={onChange} total={50} />
     </div>
   )
 }
