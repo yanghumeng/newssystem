@@ -6,6 +6,7 @@ export default function Edit() {
       <div>
         修改
       </div>
+      修改
     </div>
   )
 }
