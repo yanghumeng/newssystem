@@ -4,8 +4,8 @@ export default function Edit() {
   return (
     <div>
       <div>
-      修改
-    </div>
+        修改
+      </div>
     </div>
   )
 }
