@@ -20,7 +20,7 @@ export default function Lists() {
         setdata(arr);
         settotal(total);
         setcurrent(num);
-        setcurrent(num);
+        setpagesize(count);
       }
     })
   }
