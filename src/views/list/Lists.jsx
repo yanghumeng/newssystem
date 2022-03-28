@@ -1,31 +1,40 @@
 import React, { useState, useEffect } from 'react'
 import { articleApi } from '../../request/api'
 
-import { List ,Button,Pagination} from 'antd';
+import { List, Button, Pagination } from 'antd';
 
 import './Lists.less'
 export default function Lists() {
   const [data, setdata] = useState([])
-  const [page, setpage] = useState(3)
-  useEffect(() => {
-    articleApi().then((res) => {
+  const [total, settotal] = useState(0)
+  const [current, setcurrent] = useState(1)
+  const [pagesize, setpagesize] = useState(10)
+  const getList = (num) => {
+    articleApi({
+      num: num,
+      count: pagesize
+    }).then((res) => {
       console.log(res)
-      if(res.errCode===0){
-        let {arr,total,num,count}=res.data
+      if (res.errCode === 0) {
+        let { arr, total, num, count } = res.data;
+        setdata(arr);
+        settotal(total);
+        setcurrent(num);
+        setpagesize(count);
       }
-      //setdata(res.data.arr)
     })
+  }
+  useEffect(() => {
+    getList(current)
   }, []);
   const onChange = page => {
     console.log(page);
-    this.setState({
-      current: page,
-    });
+    getList(page)
   };
   return (
     <div className="lists">
       <List
-      className="lists-content"
+        className="lists-content"
         itemLayout="horizontal"
         dataSource={data}
         renderItem={item => (
@@ -37,7 +46,7 @@ export default function Lists() {
           </List.Item>
         )}
       />
-      <Pagination onChange={onChange} total={50} />
+      <Pagination current={current} pageSize={pagesize} onChange={onChange} total={total} />
     </div>
   )
 }
