@@ -12,6 +12,10 @@ const instance = axios.create(axoption)//创建实例
 //   return data
 // }
 instance.interceptors.request.use((config) => {
+  if(JSON.parse(localStorage.getItem('userInfo')))
+  config.headers={
+    'cms-token':JSON.parse(localStorage.getItem('userInfo'))['cms-token']
+  };
   return config
 })
 instance.interceptors.response.use(

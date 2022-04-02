@@ -1,14 +1,17 @@
 import React, { useState, useEffect } from 'react'
-import { articleApi } from '../../request/api'
+import { articleApi, delArticleApi} from '../../request/api'
+import filter from '../../utils/index'
 
 import { List, Button, Pagination } from 'antd';
 
 import './Lists.less'
+import { useNavigate } from 'react-router-dom';
 export default function Lists() {
   const [data, setdata] = useState([])
   const [total, settotal] = useState(0)
   const [current, setcurrent] = useState(1)
   const [pagesize, setpagesize] = useState(10)
+  const navigate= useNavigate()
   const getList = (num) => {
     articleApi({
       num: num,
@@ -20,15 +23,19 @@ export default function Lists() {
         setdata(arr);
         settotal(total);
         setcurrent(num);
-        //setpagesize(count);
+        setpagesize(count);
       }
     })
   }
   useEffect(() => {
     getList(current)
   }, []);
+  const delaritcle=(id)=>{
+    delArticleApi({id}).then((res)=>{
+      console.log(res);
+    })
+  }
   const onChange = page => {
-    console.log(page);
     getList(page)
   };
   return (
@@ -38,15 +45,16 @@ export default function Lists() {
         itemLayout="horizontal"
         dataSource={data}
         renderItem={item => (
-          <List.Item actions={[<Button type="primary">编辑</Button>, <Button type="primary" danger>删除</Button>]}>
+          <List.Item actions={[<Button type="primary" onClick={()=>navigate('/edit/'+item.id)}>编辑</Button>, <Button type="primary" onClick={delaritcle} danger>删除</Button>]}>
             <List.Item.Meta
               title={<a href="https://ant.design">{item.title}</a>}
               description={item.subTitle}
             />
+            <div>{filter.formatTime(item.date)}</div>
           </List.Item>
         )}
       />
-      <Pagination current={current} pageSize={pagesize} onChange={onChange} total={total} />
+      <Pagination style={{textAlign: 'center'}} current={current} pageSize={pagesize} onChange={onChange} total={total} />
     </div>
   )
 }

@@ -14,6 +14,10 @@ export default function Bread() {
   useEffect(() => {
     if (breadcrumbNameMap[pathname]) {
       setBreadName(breadcrumbNameMap[pathname])
+    }else{
+      if(pathname.includes('edit')){
+        setBreadName(breadcrumbNameMap['/edit'])
+      }
     }
   }, [pathname])
   return (

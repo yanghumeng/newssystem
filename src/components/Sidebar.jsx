@@ -9,6 +9,7 @@ export default function Sidebar() {
   const rootSubmenuKeys = ['sub1', 'sub2'];
   const [openKeys, setOpenKeys] = React.useState([]);
   const onOpenChange = keys => {
+    console.log(keys)
     const latestOpenKey = keys.find(key => openKeys.indexOf(key) === -1);
     if (rootSubmenuKeys.indexOf(latestOpenKey) === -1) {
       setOpenKeys(keys);
@@ -16,6 +17,7 @@ export default function Sidebar() {
       setOpenKeys(latestOpenKey ? [latestOpenKey] : []);
     }
   };
+
   const handleClick = e => {
     navigate('/'+e.key)
   };
